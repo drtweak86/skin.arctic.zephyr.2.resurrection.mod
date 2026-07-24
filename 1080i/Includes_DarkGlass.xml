@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+    <include name="DarkGlass_GlobalOverlay">
+        <control type="image">
+            <visible>Skin.HasSetting(DarkGlass)</visible>
+            <texture colordiffuse="99000000">common/white.png</texture>
+        </control>
+    </include>
+    <include name="DarkGlass_DialogOverlay">
+        <control type="image">
+            <visible>Skin.HasSetting(DarkGlass)</visible>
+            <texture border="20" colordiffuse="D0101010">common/dialog.png</texture>
+        </control>
+    </include>
+</includes>

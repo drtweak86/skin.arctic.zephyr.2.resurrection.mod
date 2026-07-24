@@ -247,7 +247,7 @@
 
     <include name="OSD_VideoPosition">
         <align>center</align>
-        <height>48</height>
+        <height>60</height>
         <centerbottom>55</centerbottom>
     </include>
     <include name="OSD_LiveTVPosition">
@@ -1164,12 +1164,12 @@
         <control type="button" id="12">
             <centertop>50%</centertop>
             <description>Skip Back</description>
-            <width>48</width>
-            <height>48</height>
+            <width>60</width>
+            <height>60</height>
             <label/>
             <font/>
-            <texturefocus colordiffuse="$VAR[ColorHighlight]" flipx="true">osd/next.png</texturefocus>
-            <texturenofocus colordiffuse="panel_fg_70" flipx="true">osd/next.png</texturenofocus>
+            <texturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</texturefocus>
+            <texturenofocus colordiffuse="dialog_bg_70">common/circle.png</texturenofocus>
             <onclick>PlayerControl(Previous)</onclick>
             <onfocus>ClearProperty(OSD_Menu,Home)</onfocus>
             <include>OSD_Button_OnFocus</include>
@@ -1177,36 +1177,87 @@
             <visible>!VideoPlayer.Content(livetv)</visible>
             <visible>Player.HasSceneMarkers | Player.ChapterCount | Integer.IsGreater(Playlist.Length(video),1)</visible>
         </control>
+        <control type="group" id="90001">
+            <left>-32</left>
+            <width>0</width>
+                <visible>!Skin.HasSetting(HideChaptersButton)</visible>
+                <visible>!VideoPlayer.Content(livetv)</visible>
+                <visible>Player.HasSceneMarkers | Player.ChapterCount | Integer.IsGreater(Playlist.Length(video),1)</visible>
+            <control type="group">
+                <left>-60</left>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70" flipx="true">osd/next.png</texture>
+                    <visible>!Control.HasFocus(12)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]" flipx="true">osd/next.png</texture>
+                    <visible>Control.HasFocus(12)</visible>
+                </control>
+            </control>
+        </control>
 
         <control type="button" id="13">
             <centertop>50%</centertop>
             <description>Rewind</description>
-            <width>48</width>
-            <height>48</height>
+            <width>60</width>
+            <height>60</height>
             <label/>
             <font/>
-            <texturefocus colordiffuse="$VAR[ColorHighlight]" flipx="true">osd/ff.png</texturefocus>
-            <texturenofocus colordiffuse="panel_fg_70" flipx="true">osd/ff.png</texturenofocus>
+            <texturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</texturefocus>
+            <texturenofocus colordiffuse="dialog_bg_70">common/circle.png</texturenofocus>
             <onclick>PlayerControl(Rewind)</onclick>
             <onfocus>ClearProperty(OSD_Menu,Home)</onfocus>
             <include>OSD_Button_OnFocus</include>
             <visible>!Skin.HasSetting(HideForwardRewindButton)</visible>
             <visible>[Player.SeekEnabled + !VideoPlayer.Content(livetv)] + !Player.Paused</visible>
         </control>
+        <control type="group" id="90002">
+            <left>-32</left>
+            <width>0</width>
+                <visible>!Skin.HasSetting(HideForwardRewindButton)</visible>
+                <visible>[Player.SeekEnabled + !VideoPlayer.Content(livetv)] + !Player.Paused</visible>
+            <control type="group">
+                <left>-60</left>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70" flipx="true">osd/ff.png</texture>
+                    <visible>!Control.HasFocus(13)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]" flipx="true">osd/ff.png</texture>
+                    <visible>Control.HasFocus(13)</visible>
+                </control>
+            </control>
+        </control>
 
         <control type="togglebutton" id="14">
             <centertop>50%</centertop>
             <description>Play/Pause</description>
-            <width>48</width>
-            <height>48</height>
+            <width>60</width>
+            <height>60</height>
             <label/>
             <altlabel></altlabel>
             <font/>
-            <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/pause.png</texturefocus>
-            <texturenofocus colordiffuse="panel_fg_70">osd/pause.png</texturenofocus>
+            <texturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</texturefocus>
+            <texturenofocus colordiffuse="dialog_bg_70">common/circle.png</texturenofocus>
             <usealttexture>Player.Paused | Player.Forwarding | Player.Rewinding</usealttexture>
-            <alttexturefocus colordiffuse="$VAR[ColorHighlight]">osd/play.png</alttexturefocus>
-            <alttexturenofocus colordiffuse="panel_fg_70">osd/play.png</alttexturenofocus>
+            <alttexturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</alttexturefocus>
+            <alttexturenofocus colordiffuse="dialog_bg_70">common/circle.png</alttexturenofocus>
             <onclick>PlayerControl(Play)</onclick>
             <visible>Player.PauseEnabled</visible>
             <animation effect="fade" start="100" end="33" time="100" condition="!Player.PauseEnabled">Conditional</animation>
@@ -1215,48 +1266,140 @@
             <visible>!Skin.HasSetting(HidePlayPauseButton)</visible>
             <visible>!VideoPlayer.Content(LiveTV)</visible>
         </control>
+        <control type="group" id="90003">
+            <left>-32</left>
+            <width>0</width>
+                <visible>Player.PauseEnabled</visible>
+                <visible>!Skin.HasSetting(HidePlayPauseButton)</visible>
+                <visible>!VideoPlayer.Content(LiveTV)</visible>
+            <control type="group">
+                <left>-60</left>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70">osd/pause.png</texture>
+                    <visible>!Control.HasFocus(14) + !(Player.Paused | Player.Forwarding | Player.Rewinding)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]">osd/pause.png</texture>
+                    <visible>Control.HasFocus(14) + !(Player.Paused | Player.Forwarding | Player.Rewinding)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70">osd/play.png</texture>
+                    <visible>!Control.HasFocus(14) + (Player.Paused | Player.Forwarding | Player.Rewinding)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]">osd/play.png</texture>
+                    <visible>Control.HasFocus(14) + (Player.Paused | Player.Forwarding | Player.Rewinding)</visible>
+                </control>
+            </control>
+        </control>
 
         <control type="button" id="15">
             <centertop>50%</centertop>
             <description>Stop</description>
-            <width>48</width>
-            <height>48</height>
+            <width>60</width>
+            <height>60</height>
             <label/>
             <font/>
-            <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/stop.png</texturefocus>
-            <texturenofocus colordiffuse="panel_fg_70">osd/stop.png</texturenofocus>
+            <texturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</texturefocus>
+            <texturenofocus colordiffuse="dialog_bg_70">common/circle.png</texturenofocus>
             <onclick>PlayerControl(Stop)</onclick>
             <onfocus>ClearProperty(OSD_Menu,Home)</onfocus>
             <include>OSD_Button_OnFocus</include>
             <visible>!Skin.HasSetting(HideStopButton)</visible>
             <visible>!VideoPlayer.Content(LiveTV)</visible>
         </control>
+        <control type="group" id="90004">
+            <left>-32</left>
+            <width>0</width>
+                <visible>!Skin.HasSetting(HideStopButton)</visible>
+                <visible>!VideoPlayer.Content(LiveTV)</visible>
+            <control type="group">
+                <left>-60</left>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70">osd/stop.png</texture>
+                    <visible>!Control.HasFocus(15)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]">osd/stop.png</texture>
+                    <visible>Control.HasFocus(15)</visible>
+                </control>
+            </control>
+        </control>
 
         <control type="button" id="16">
             <centertop>50%</centertop>
             <description>Fast Forward</description>
-            <width>48</width>
-            <height>48</height>
+            <width>60</width>
+            <height>60</height>
             <label/>
             <font/>
-            <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/ff.png</texturefocus>
-            <texturenofocus colordiffuse="panel_fg_70">osd/ff.png</texturenofocus>
+            <texturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</texturefocus>
+            <texturenofocus colordiffuse="dialog_bg_70">common/circle.png</texturenofocus>
             <onclick>PlayerControl(Forward)</onclick>
             <onfocus>ClearProperty(OSD_Menu,Home)</onfocus>
             <include>OSD_Button_OnFocus</include>
             <visible>!Skin.HasSetting(HideForwardRewindButton)</visible>
             <visible>[Player.SeekEnabled + !VideoPlayer.Content(livetv)] + !Player.Paused</visible>
         </control>
+        <control type="group" id="90005">
+            <left>-32</left>
+            <width>0</width>
+                <visible>!Skin.HasSetting(HideForwardRewindButton)</visible>
+                <visible>[Player.SeekEnabled + !VideoPlayer.Content(livetv)] + !Player.Paused</visible>
+            <control type="group">
+                <left>-60</left>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70">osd/ff.png</texture>
+                    <visible>!Control.HasFocus(16)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]">osd/ff.png</texture>
+                    <visible>Control.HasFocus(16)</visible>
+                </control>
+            </control>
+        </control>
 
         <control type="button" id="17">
             <centertop>50%</centertop>
             <description>Next</description>
-            <width>48</width>
-            <height>48</height>
+            <width>60</width>
+            <height>60</height>
             <label/>
             <font/>
-            <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/next.png</texturefocus>
-            <texturenofocus colordiffuse="panel_fg_70">osd/next.png</texturenofocus>
+            <texturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</texturefocus>
+            <texturenofocus colordiffuse="dialog_bg_70">common/circle.png</texturenofocus>
             <onclick>PlayerControl(Next)</onclick>
             <onfocus>ClearProperty(OSD_Menu,Home)</onfocus>
             <include>OSD_Button_OnFocus</include>
@@ -1264,12 +1407,38 @@
             <visible>!VideoPlayer.Content(LiveTV)</visible>
             <visible>Player.HasSceneMarkers | Player.ChapterCount | Integer.IsGreater(Playlist.Length(video),1) | PVR.IsTimeShift</visible>
         </control>
+        <control type="group" id="90006">
+            <left>-32</left>
+            <width>0</width>
+                <visible>!Skin.HasSetting(HideChaptersButton)</visible>
+                <visible>!VideoPlayer.Content(LiveTV)</visible>
+                <visible>Player.HasSceneMarkers | Player.ChapterCount | Integer.IsGreater(Playlist.Length(video),1) | PVR.IsTimeShift</visible>
+            <control type="group">
+                <left>-60</left>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70">osd/next.png</texture>
+                    <visible>!Control.HasFocus(17)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]">osd/next.png</texture>
+                    <visible>Control.HasFocus(17)</visible>
+                </control>
+            </control>
+        </control>
 
         <control type="button" id="18">
             <centertop>50%</centertop>
             <description>Subs</description>
-            <width>48</width>
-            <height>48</height>
+            <width>60</width>
+            <height>60</height>
             <label>$VAR[OSD_CurrentSubLang]</label>
             <textcolor>Selected</textcolor>
             <focusedcolor>Highlight</focusedcolor>
@@ -1278,8 +1447,8 @@
             <align>right</align>
             <aligny>top</aligny>
             <textoffsetx>0</textoffsetx>
-            <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/subs.png</texturefocus>
-            <texturenofocus colordiffuse="panel_fg_70">osd/subs.png</texturenofocus>
+            <texturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</texturefocus>
+            <texturenofocus colordiffuse="dialog_bg_70">common/circle.png</texturenofocus>
             <onclick>ActivateWindow(osdsubtitlesettings)</onclick>
             <onfocus>ClearProperty(OSD_Menu,Home)</onfocus>
             <include>OSD_Button_OnFocus</include>
@@ -1287,11 +1456,37 @@
             <visible>!VideoPlayer.Content(LiveTV)</visible>
             <visible>!VideoPlayer.Content(musicvideos)</visible>
         </control>
+        <control type="group" id="90007">
+            <left>-32</left>
+            <width>0</width>
+                <visible>Window.IsVisible(videoosd)</visible>
+                <visible>!VideoPlayer.Content(LiveTV)</visible>
+                <visible>!VideoPlayer.Content(musicvideos)</visible>
+            <control type="group">
+                <left>-60</left>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70">osd/subs.png</texture>
+                    <visible>!Control.HasFocus(18)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]">osd/subs.png</texture>
+                    <visible>Control.HasFocus(18)</visible>
+                </control>
+            </control>
+        </control>
         <control type="button" id="10018">
             <centertop>50%</centertop>
             <description>Audio</description>
-            <width>48</width>
-            <height>48</height>
+            <width>60</width>
+            <height>60</height>
             <label>$INFO[VideoPlayer.AudioLanguage,[UPPERCASE],[/UPPERCASE]]</label>
             <textcolor>Selected</textcolor>
             <focusedcolor>Highlight</focusedcolor>
@@ -1300,37 +1495,88 @@
             <align>right</align>
             <aligny>top</aligny>
             <textoffsetx>0</textoffsetx>
-            <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/audio-settings.png</texturefocus>
-            <texturenofocus colordiffuse="panel_fg_70">osd/audio-settings.png</texturenofocus>
+            <texturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</texturefocus>
+            <texturenofocus colordiffuse="dialog_bg_70">common/circle.png</texturenofocus>
             <onclick>ActivateWindow(osdaudiosettings)</onclick>
             <include>OSD_Button_OnFocus</include>
             <visible>Window.IsVisible(videoosd)</visible>
             <visible>!VideoPlayer.Content(LiveTV)</visible>
             <visible>!VideoPlayer.Content(musicvideos)</visible>
         </control>
+        <control type="group" id="90008">
+            <left>-32</left>
+            <width>0</width>
+                <visible>Window.IsVisible(videoosd)</visible>
+                <visible>!VideoPlayer.Content(LiveTV)</visible>
+                <visible>!VideoPlayer.Content(musicvideos)</visible>
+            <control type="group">
+                <left>-60</left>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70">osd/audio-settings.png</texture>
+                    <visible>!Control.HasFocus(10018)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]">osd/audio-settings.png</texture>
+                    <visible>Control.HasFocus(10018)</visible>
+                </control>
+            </control>
+        </control>
         <control type="button" id="41">
             <centertop>50%</centertop>
             <description>Video Settings</description>
-            <width>48</width>
-            <height>48</height>
+            <width>60</width>
+            <height>60</height>
             <label/>
             <font/>
-            <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/video-settings.png</texturefocus>
-            <texturenofocus colordiffuse="panel_fg_70">osd/video-settings.png</texturenofocus>
+            <texturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</texturefocus>
+            <texturenofocus colordiffuse="dialog_bg_70">common/circle.png</texturenofocus>
             <onclick>ActivateWindow(osdvideosettings)</onclick>
             <visible>!VideoPlayer.Content(musicvideos) + !Window.IsVisible(musicosd)</visible>
             <visible>!VideoPlayer.Content(LiveTV)</visible>
+        </control>
+        <control type="group" id="90009">
+            <left>-32</left>
+            <width>0</width>
+                <visible>!VideoPlayer.Content(musicvideos) + !Window.IsVisible(musicosd)</visible>
+                <visible>!VideoPlayer.Content(LiveTV)</visible>
+            <control type="group">
+                <left>-60</left>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70">osd/video-settings.png</texture>
+                    <visible>!Control.HasFocus(41)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]">osd/video-settings.png</texture>
+                    <visible>Control.HasFocus(41)</visible>
+                </control>
+            </control>
         </control>
 
         <control type="button" id="32">
             <centertop>50%</centertop>
             <description>extrainfo</description>
-            <width>48</width>
-            <height>48</height>
+            <width>60</width>
+            <height>60</height>
             <label/>
             <font/>
-            <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/info.png</texturefocus>
-            <texturenofocus colordiffuse="panel_fg_70">osd/info.png</texturenofocus>
+            <texturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</texturefocus>
+            <texturenofocus colordiffuse="dialog_bg_70">common/circle.png</texturenofocus>
             <onclick>SetProperty(OSDExtendedInfo,1,Home)</onclick>
             <onclick condition="!VideoPlayer.Content(livetv)">RunScript(script.skinvariables,run_executebuiltin=special://skin/shortcuts/builtins/skinvariables-closeosd.json,use_rules=True,"command=ActivateWindow(1193)")</onclick>
             <!-- <onclick>Action(Close)</onclick>
@@ -1340,6 +1586,31 @@
             <include>OSD_Button_OnFocus</include>
             <visible>Window.IsVisible(videoosd)</visible>
             <visible>!VideoPlayer.Content(livetv)</visible>
+        </control>
+        <control type="group" id="90010">
+            <left>-32</left>
+            <width>0</width>
+                <visible>Window.IsVisible(videoosd)</visible>
+                <visible>!VideoPlayer.Content(livetv)</visible>
+            <control type="group">
+                <left>-60</left>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70">osd/info.png</texture>
+                    <visible>!Control.HasFocus(32)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]">osd/info.png</texture>
+                    <visible>Control.HasFocus(32)</visible>
+                </control>
+            </control>
         </control>
         <control type="togglebutton" id="20">
             <usealttexture>Control.HasFocus(20) | Control.HasFocus(21) | Control.HasFocus(22)</usealttexture>
@@ -1430,46 +1701,123 @@
         <control type="button" id="25">
             <centertop>50%</centertop>
             <description>Settings</description>
-            <width>48</width>
-            <height>48</height>
+            <width>60</width>
+            <height>60</height>
             <label/>
             <font/>
-            <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/settings.png</texturefocus>
-            <texturenofocus colordiffuse="panel_fg_70">osd/settings.png</texturenofocus>
+            <texturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</texturefocus>
+            <texturenofocus colordiffuse="dialog_bg_70">common/circle.png</texturenofocus>
             <onclick>SetFocus(3112,9)</onclick>
             <onup>SetFocus(3112,9)</onup>
             <visible>!Skin.HasSetting(HideSettingsButton)</visible>
             <visible>!VideoPlayer.Content(musicvideos)</visible>
             <visible>!VideoPlayer.Content(LiveTV)</visible>
         </control>
+        <control type="group" id="90011">
+            <left>-32</left>
+            <width>0</width>
+                <visible>!Skin.HasSetting(HideSettingsButton)</visible>
+                <visible>!VideoPlayer.Content(musicvideos)</visible>
+                <visible>!VideoPlayer.Content(LiveTV)</visible>
+            <control type="group">
+                <left>-60</left>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70">osd/settings.png</texture>
+                    <visible>!Control.HasFocus(25)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]">osd/settings.png</texture>
+                    <visible>Control.HasFocus(25)</visible>
+                </control>
+            </control>
+        </control>
 
         <control type="button" id="42">
             <centertop>50%</centertop>
             <description>Bookmarks</description>
-            <width>48</width>
-            <height>48</height>
+            <width>60</width>
+            <height>60</height>
             <label/>
             <font/>
-            <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/bookmarks2.png</texturefocus>
-            <texturenofocus colordiffuse="panel_fg_70">osd/bookmarks2.png</texturenofocus>
+            <texturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</texturefocus>
+            <texturenofocus colordiffuse="dialog_bg_70">common/circle.png</texturenofocus>
             <onclick>ActivateWindow(videobookmarks)</onclick>
             <visible>!Skin.HasSetting(HideBookmarksButton)</visible>
             <visible>!VideoPlayer.Content(livetv) + !Window.IsVisible(musicosd)</visible>
+        </control>
+        <control type="group" id="90012">
+            <left>-32</left>
+            <width>0</width>
+                <visible>!Skin.HasSetting(HideBookmarksButton)</visible>
+                <visible>!VideoPlayer.Content(livetv) + !Window.IsVisible(musicosd)</visible>
+            <control type="group">
+                <left>-60</left>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70">osd/bookmarks2.png</texture>
+                    <visible>!Control.HasFocus(42)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]">osd/bookmarks2.png</texture>
+                    <visible>Control.HasFocus(42)</visible>
+                </control>
+            </control>
         </control>
 
         <control type="button" id="414">
             <centertop>50%</centertop>
             <description>Playerprocessinfo</description>
-            <width>48</width>
-            <height>48</height>
+            <width>60</width>
+            <height>60</height>
             <label/>
             <font/>
-            <texturefocus colordiffuse="$VAR[ColorHighlight]">DefaultAddonScreensaver.png</texturefocus>
-            <texturenofocus colordiffuse="panel_fg_70">DefaultAddonScreensaver.png</texturenofocus>
+            <texturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</texturefocus>
+            <texturenofocus colordiffuse="dialog_bg_70">common/circle.png</texturenofocus>
             <onclick>ActivateWindow(playerprocessinfo)</onclick>
             <visible>!Skin.HasSetting(HidePlayerInfoButton)</visible>
             <visible>Window.IsVisible(videoosd)</visible>
             <visible>!VideoPlayer.Content(LiveTV)</visible>
+        </control>
+        <control type="group" id="90013">
+            <left>-32</left>
+            <width>0</width>
+                <visible>!Skin.HasSetting(HidePlayerInfoButton)</visible>
+                <visible>Window.IsVisible(videoosd)</visible>
+                <visible>!VideoPlayer.Content(LiveTV)</visible>
+            <control type="group">
+                <left>-60</left>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70">DefaultAddonScreensaver.png</texture>
+                    <visible>!Control.HasFocus(414)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]">DefaultAddonScreensaver.png</texture>
+                    <visible>Control.HasFocus(414)</visible>
+                </control>
+            </control>
         </control>
 
         <control type="button" id="40">
@@ -1488,18 +1836,44 @@
         <control type="button" id="31">
             <centertop>50%</centertop>
             <description>3d</description>
-            <width>48</width>
-            <height>48</height>
+            <width>60</width>
+            <height>60</height>
             <label/>
             <font/>
-            <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/3d.png</texturefocus>
-            <texturenofocus colordiffuse="panel_fg_70">osd/3d.png</texturenofocus>
+            <texturefocus colordiffuse="$VAR[ColorHighlight]">common/circle.png</texturefocus>
+            <texturenofocus colordiffuse="dialog_bg_70">common/circle.png</texturenofocus>
             <onclick>StereoMode</onclick>
             <visible>VideoPlayer.IsStereoscopic</visible>
             <onfocus>ClearProperty(OSD_Menu,Home)</onfocus>
             <include>OSD_Button_OnFocus</include>
             <visible>Window.IsVisible(videoosd)</visible>
             <visible>!VideoPlayer.Content(livetv)</visible>
+        </control>
+        <control type="group" id="90014">
+            <left>-32</left>
+            <width>0</width>
+                <visible>VideoPlayer.IsStereoscopic</visible>
+                <visible>Window.IsVisible(videoosd)</visible>
+                <visible>!VideoPlayer.Content(livetv)</visible>
+            <control type="group">
+                <left>-60</left>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="panel_fg_70">osd/3d.png</texture>
+                    <visible>!Control.HasFocus(31)</visible>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="$VAR[ColorHighlight]">osd/3d.png</texture>
+                    <visible>Control.HasFocus(31)</visible>
+                </control>
+            </control>
         </control>
 
         <control type="button" id="38">

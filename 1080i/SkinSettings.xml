@@ -142,6 +142,13 @@
                             <onclick>ActivateWindow(1150)</onclick>
                         </control>
 
+                        <control type="radiobutton" id="19990" description="Dark Glass">
+                            <include>Defs_Settings_Button</include>
+                            <label>Dark Glass</label>
+                            <selected>Skin.HasSetting(DarkGlass)</selected>
+                            <onclick>Skin.ToggleSetting(DarkGlass)</onclick>
+                        </control>
+
                         <control type="radiobutton" id="19112" description="Disable profile info in main menu">
                             <include>Defs_Settings_Button</include>
                             <label> - $LOCALIZE[31591]</label>
@@ -685,6 +692,15 @@
                             <onclick>Skin.ToggleSetting(DisableWatchedOverlay)</onclick>
                         </control>
 
+                        <control type="button" id="19403" description="Watched/progress indicator color">
+                            <include>Defs_Settings_Button</include>
+                            <label>$LOCALIZE[31573]</label>
+                            <label2>$INFO[Skin.String(watchedprogresscolor.name)]</label2>
+                            <onclick>SetProperty(colorpick,Watched,Home)</onclick>
+                            <onclick>ActivateWindow(1117)</onclick>
+                            <enable>!Skin.HasSetting(DisableWatchedOverlay)</enable>
+                        </control>
+
                         <control type="radiobutton" id="19949" description="Unwatched episodes count indicator">
                             <include>Defs_Settings_Button</include>
                             <label>$LOCALIZE[31483]</label>
@@ -958,7 +974,6 @@
                             <label>$LOCALIZE[31314]</label>
                             <selected>!Skin.HasSetting(DisableMusicVideoAutoInfo)</selected>
                             <onclick>Skin.ToggleSetting(DisableMusicVideoAutoInfo)</onclick>
-                            <visible>!Skin.HasSetting(BigMusicVis)</visible>
                         </control>
                         <control type="radiobutton" id="19516" description="AutoMusicVis">
                             <include>Defs_Settings_Button</include>

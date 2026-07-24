@@ -35,8 +35,6 @@
     <groupoverride group="powermenu" condition="Window.IsActive(DialogButtonMenu.xml)">Close</groupoverride>
 
     <override action="Skin.SetString(SearchTerm)">
-        <action>Skin.Reset(SearchTerm)</action>
-        <action>Skin.SetString(SearchTerm)</action>
         <action>ActivateWindow(1138)</action>
     </override>
 

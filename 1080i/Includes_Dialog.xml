@@ -834,6 +834,7 @@
                 <control type="image">
                     <texture colordiffuse="dialog_overlay" border="20">common/dialog.png</texture>
                 </control>
+                <include>DarkGlass_DialogOverlay</include>
             </control>
             <control type="image">
                 <texture colordiffuse="dialog_fg_12" border="20">common/dialog-outline.png</texture>

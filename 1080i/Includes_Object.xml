@@ -73,12 +73,14 @@
 
     <include name="Object_SearchList_Template">
         <param name="labelinclude" default="Defs_Null" />
+        <param name="term" default="SearchTerm" />
         <param name="smallsquarecondition" default="false" />
         <param name="squarecondition" default="false" />
         <param name="smalllandscapecondition" default="false" />
         <param name="landscapecondition" default="false" />
         <param name="iconcondition" default="false" />
         <param name="bannercondition" default="false" />
+        <param name="showinfoonclick" default="false" />
         <definition>
             <include content="View_Cast_Toplabel">
                 <param name="groupid" value="$PARAM[groupid]" />
@@ -94,18 +96,19 @@
                 <param name="right" value="-30" />
                 <param name="height" value="item_cast_height" />
                 <param name="orientation" value="horizontal" />
-                <param name="labelinclude" value="Defs_Null" />
+                <param name="labelinclude" value="$PARAM[labelinclude]" />
                 <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
                 <param name="label2" value="ListItem.TvShowTitle" />
                 <param name="target" value="$PARAM[target]" />
                 <param name="limit" value="$PARAM[limit]" />
-                <param name="content" value="$PARAM[path]$INFO[Skin.String(SearchTerm)]$PARAM[path2]" />
+                <param name="content" value="$PARAM[path]$INFO[Skin.String($PARAM[term])]$PARAM[path2]" />
                 <param name="smallsquarecondition" value="$PARAM[smallsquarecondition]" />
                 <param name="squarecondition" value="$PARAM[squarecondition]" />
                 <param name="smalllandscapecondition" value="$PARAM[smalllandscapecondition]" />
                 <param name="landscapecondition" value="$PARAM[landscapecondition]" />
                 <param name="iconcondition" value="$PARAM[iconcondition]" />
                 <param name="bannercondition" value="$PARAM[iconcondition]" />
+                <param name="showinfoonclick" value="$PARAM[showinfoonclick]" />
                 <onback>301</onback>
                 <movement>6</movement>
                 <animation effect="fade" start="100" end="0" condition="!Integer.IsGreater(Container($PARAM[id]).NumItems,0) | Container($PARAM[id]).IsUpdating">Conditional</animation>
@@ -113,6 +116,33 @@
                 <visible>Integer.IsGreater(Container($PARAM[id]).NumItems,0) | Container($PARAM[id]).IsUpdating</visible>
             </include>
         </definition>
+    </include>
+
+    <include name="Object_Gemini_Panels">
+        <include content="Object_SearchList_Template">
+            <param name="id" value="5045" />
+            <param name="groupid" value="7545" />
+            <param name="term" value="GeminiTerm" />
+            <param name="path" value="plugin://plugin.video.themoviedb.helper?info=gemini&amp;tmdb_type=movie&amp;limit=5&amp;query=" />
+            <param name="path2" value="" />
+            <param name="label" value="Movies" />
+            <param name="limit" value="" />
+            <param name="target" value="videos" />
+            <param name="labelinclude" value="View_51_Flix_Label" />
+            <param name="showinfoonclick" value="true" />
+        </include>
+        <include content="Object_SearchList_Template">
+            <param name="id" value="5046" />
+            <param name="groupid" value="7546" />
+            <param name="term" value="GeminiTerm" />
+            <param name="path" value="plugin://plugin.video.themoviedb.helper?info=gemini&amp;tmdb_type=tv&amp;limit=5&amp;query=" />
+            <param name="path2" value="" />
+            <param name="label" value="TV Shows" />
+            <param name="limit" value="" />
+            <param name="target" value="videos" />
+            <param name="labelinclude" value="View_51_Flix_Label" />
+            <param name="showinfoonclick" value="true" />
+        </include>
     </include>
 
     <include name="Object_Icon_Details">
@@ -253,6 +283,7 @@
         <param name="left" default="-15" />
         <param name="right" default="-25" />
         <param name="limit" default="25" />
+        <param name="showinfoonclick" default="false" />
         <definition>
             <control type="$PARAM[controltype]" id="$PARAM[id]">
                 <nested />
@@ -266,6 +297,7 @@
                 <onclick condition="[Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(1190)] + String.StartsWith(ListItem.FolderPath,plugin://plugin.video.themoviedb.helper) + [String.IsEmpty(ListItem.DBID) | [!String.IsEqual(ListItem.DBType,movie) + !String.IsEqual(ListItem.DBType,tvshow)]]">RunScript(plugin.video.themoviedb.helper,add_path=$INFO[ListItem.FolderPath],call_auto=1190)</onclick>
                 <onclick condition="[Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(1190)] + String.StartsWith(ListItem.FolderPath,plugin://plugin.video.themoviedb.helper) + !String.IsEmpty(ListItem.DBID) + String.IsEqual(ListItem.DBType,movie)">RunScript(plugin.video.themoviedb.helper,add_path=$INFO[ListItem.Label,videodb://movies/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22is%22%2C%22value%22%3A%5B%22,%22%5D%7D%5D%7D%2C%22type%22%3A%22movies%22%7D],call_auto=1190)</onclick>
                 <onclick condition="[Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(1190)] + String.StartsWith(ListItem.FolderPath,plugin://plugin.video.themoviedb.helper) + !String.IsEmpty(ListItem.DBID) + String.IsEqual(ListItem.DBType,tvshow)">RunScript(plugin.video.themoviedb.helper,add_path=$INFO[ListItem.Label,videodb://tvshows/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22is%22%2C%22value%22%3A%5B%22,%22%5D%7D%5D%7D%2C%22type%22%3A%22tvshows%22%7D],call_auto=1190)</onclick>
+                <onclick condition="$PARAM[showinfoonclick] + ![Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(1190)]">Action(Info)</onclick>
                 <preloaditems>2</preloaditems>
                 <orientation>horizontal</orientation>
 
@@ -1086,55 +1118,17 @@
         </definition>
     </include>
 
-    <include name="Flix_Object_Info_Line_Label">
-        <param name="divider" default="true" />
-        <param name="visible" default="true" />
-        <param name="font" default="font13" />
-        <definition>
-            <control type="label">
-                <width>auto</width>
-                <label>  |  </label>
-                <height>40</height>
-                <aligny>top</aligny>
-                <font>$PARAM[font]</font>
-                <textcolor>$VAR[ColorHighlight]</textcolor>
-                <include content="Object_Variable_Font">
-                    <param name="std" value="font_small" />
-                    <param name="alt" value="font_tiny" />
-                    <param name="usealt" value="$EXP[FontSetIsMediumOrLarger]" />
-                </include>
-
-                <visible>!String.IsEmpty(Control.GetLabel($PARAM[id]))</visible>
-                <visible>$PARAM[divider]</visible>
-                <visible>$PARAM[visible]</visible>
-            </control>
-            <control type="label" id="$PARAM[id]">
-                <width>auto</width>
-                <label>$PARAM[label]</label>
-                <height>40</height>
-                <aligny>top</aligny>
-                <font>$PARAM[font]</font>
-                <textcolor>$PARAM[textcolor]</textcolor>
-                <include content="Object_Variable_Font">
-                    <param name="std" value="font_small" />
-                    <param name="alt" value="font_tiny" />
-                    <param name="usealt" value="$EXP[FontSetIsMediumOrLarger]" />
-                </include>
-
-                <visible>$PARAM[visible]</visible>
-            </control>
-        </definition>
-    </include>
-
     <include name="Object_Info_Line_Label">
         <param name="divider" default="true" />
         <param name="visible" default="true" />
+        <param name="font" default="font_small" />
         <definition>
             <control type="label">
                 <width>auto</width>
                 <label>  |  </label>
                 <height>40</height>
                 <aligny>top</aligny>
+                <font>$PARAM[font]</font>
                 <textcolor>$VAR[ColorHighlight]</textcolor>
                 <include content="Object_Variable_Font">
                     <param name="std" value="font_small" />
@@ -1151,6 +1145,7 @@
                 <label>$PARAM[label]</label>
                 <height>40</height>
                 <aligny>top</aligny>
+                <font>$PARAM[font]</font>
                 <textcolor>$PARAM[textcolor]</textcolor>
                 <include content="Object_Variable_Font">
                     <param name="std" value="font_small" />
@@ -1159,137 +1154,6 @@
                 </include>
 
                 <visible>$PARAM[visible]</visible>
-            </control>
-        </definition>
-    </include>
-
-    <include name="Flix_Object_Info_Line">
-        <param name="label" default="$VAR[Label_InfoLine_01]" />
-        <param name="hdsd" default="Skin.HasSetting(Hide_Codecs)" />
-        <param name="nextaired" default="true" />
-        <param name="textcolor" default="main_fg_100" />
-        <param name="container" default="" />
-        <param name="uid" default="661" />
-        <param name="percentrating" default="true" />
-        <!-- text colors -->
-        <param name="green" default="ff27ae60" />
-        <definition>
-            <control type="grouplist">
-                <height>40</height>
-                <orientation>horizontal</orientation>
-                <usecontrolcoords>true</usecontrolcoords>
-                <itemgap>0</itemgap>
-                <left>0</left>
-                <right>0</right>
-                <!-- First Items -->
-                <!-- Set a fallback so divider is not first item if blank -->
-                <include content="Flix_Object_Info_Line_Label" condition="!Skin.HasSetting(Infoline.DisableMatch)">
-                    <param name="label" value="$VAR[Def_Percentage_Rating]% $LOCALIZE[31589]   " />
-                    <param name="font" value="font_title_mini" />
-                    <param name="textcolor" value="$PARAM[green]" />
-                    <param name="divider" value="false" />
-                    <param name="visible" value="!String.IsEmpty(ListItem.Rating) + $PARAM[percentrating]" />
-                </include>
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="label" value="$INFO[$PARAM[container]ListItem.Year]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="divider" value="false" />
-                    <param name="visible" value="!String.IsEqual($PARAM[container]ListItem.DBType,set) + !String.IsEqual($PARAM[container]ListItem.DBType,artist) + !String.IsEqual($PARAM[container]ListItem.DBType,album) + !String.IsEqual($PARAM[container]ListItem.DBType,song) + [!String.IsEqual($PARAM[container]ListItem.DBType,episode) | String.IsEmpty($PARAM[container]ListItem.Premiered)]" />
-                </include>
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="label" value="$INFO[$PARAM[container]ListItem.Premiered]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="divider" value="false" />
-                    <param name="visible" value="String.IsEqual($PARAM[container]ListItem.DBType,episode) + !String.IsEmpty($PARAM[container]ListItem.Premiered)" />
-                </include>
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="label" value="$INFO[Window(Home).Property(TMDbHelper.ListItem.Year)]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="divider" value="false" />
-                    <param name="visible" value="String.IsEqual($PARAM[container]ListItem.DBType,set)" />
-                </include>
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="label" value="$INFO[$PARAM[container]ListItem.Property(Artist_Genre)]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="divider" value="false" />
-                    <param name="visible" value="String.IsEqual($PARAM[container]ListItem.DBType,artist)" />
-                </include>
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="label" value="$INFO[$PARAM[container]ListItem.Artist]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="divider" value="false" />
-                    <param name="visible" value="String.IsEqual($PARAM[container]ListItem.DBType,album) | String.IsEqual($PARAM[container]ListItem.DBType,song)" />
-                </include>
-
-                <!-- Further Items -->
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="id" value="$PARAM[uid]02" />
-                    <param name="label" value="$INFO[$PARAM[container]ListItem.MPAA]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="visible" value="![String.IsEqual($PARAM[container]ListItem.DBType,artist) | String.IsEqual($PARAM[container]ListItem.DBType,album) | String.IsEqual($PARAM[container]ListItem.DBType,song)] + !Skin.HasSetting(Infoline.DisableMPAA)" />
-                </include>
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="id" value="$PARAM[uid]03" />
-                    <param name="label" value="$INFO[$PARAM[container]ListItem.Property(WatchedEpisodes),$LOCALIZE[16102] , $LOCALIZE[20163] ]$INFO[$PARAM[container]ListItem.Property(TotalEpisodes),,]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="visible" value="String.IsEqual($PARAM[container]ListItem.DBType,tvshow) | String.IsEqual($PARAM[container]ListItem.DBType,season)" />
-                </include>
-                <include content="Flix_Object_Info_Line_Label" condition="!Skin.HasSetting(Infoline.DisableGenre)">
-                    <param name="id" value="$PARAM[uid]11" />
-                    <param name="label" value="$INFO[Window(Home).Property(TMDbHelper.ListItem.base_genre)]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="visible" value="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.base_genre))  + [String.IsEqual($PARAM[container]ListItem.DBType,tvshow) | String.IsEqual($PARAM[container]ListItem.DBType,movie)]" />
-                </include>
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="id" value="$PARAM[uid]04" />
-                    <param name="label" value="$INFO[$PARAM[container]ListItem.Duration(h),, $LOCALIZE[31036] ]$INFO[$PARAM[container]ListItem.Duration(mm),, $LOCALIZE[31020]]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="visible" value="[String.IsEqual($PARAM[container]ListItem.DBType,movie) | String.IsEqual($PARAM[container]ListItem.DBType,episode)] + [!String.IsEmpty($PARAM[container]ListItem.Duration) + Integer.IsGreater($PARAM[container]ListItem.Duration(h),0)]" />
-                </include>
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="id" value="$PARAM[uid]05" />
-                    <param name="label" value="$INFO[$PARAM[container]ListItem.Duration(mins),, $LOCALIZE[31020]]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="visible" value="[String.IsEqual($PARAM[container]ListItem.DBType,movie) | String.IsEqual($PARAM[container]ListItem.DBType,episode)] + [!String.IsEmpty($PARAM[container]ListItem.Duration) + !Integer.IsGreater($PARAM[container]ListItem.Duration(h),0)]" />
-                </include>
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="id" value="$PARAM[uid]06" />
-                    <param name="label" value="$INFO[$PARAM[container]ListItem.EndTime,$LOCALIZE[31106],]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="visible" value="[String.IsEqual($PARAM[container]ListItem.DBType,movie) | String.IsEqual($PARAM[container]ListItem.DBType,episode)] + [!String.IsEmpty($PARAM[container]ListItem.EndTime) + !String.IsEqual($PARAM[container]ListItem.EndTime,System.Time)]" />
-                </include>
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="id" value="$PARAM[uid]07" />
-                    <param name="label" value="$INFO[$PARAM[container]ListItem.Album]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="visible" value="String.IsEqual($PARAM[container]ListItem.DBType,song)" />
-                </include>
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="id" value="$PARAM[uid]08" />
-                    <param name="label" value="$INFO[$PARAM[container]ListItem.Year]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="visible" value="String.IsEqual($PARAM[container]ListItem.DBType,song)" />
-                </include>
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="id" value="$PARAM[uid]09" />
-                    <param name="label" value="$INFO[$PARAM[container]ListItem.Property(Album_Label)]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="visible" value="String.IsEqual($PARAM[container]ListItem.DBType,album)" />
-                </include>
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="id" value="$PARAM[uid]10" />
-                    <param name="label" value="$INFO[$PARAM[container]ListItem.Genre]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="visible" value="String.IsEqual($PARAM[container]ListItem.DBType,album)" />
-                </include>
-
-                <!-- Next Aired -->
-                <include content="Flix_Object_Info_Line_Label">
-                    <param name="id" value="66300" />
-                    <param name="label" value="$VAR[Label_Info_NextAired_Status,, ]$VAR[Label_Info_NextAired_Date]" />
-                    <param name="textcolor" value="$PARAM[textcolor]" />
-                    <param name="visible" value="String.IsEqual(ListItem.DBType,tvshow) + $PARAM[nextaired] + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Status))" />
-                </include>
             </control>
         </definition>
     </include>
@@ -1302,6 +1166,8 @@
         <param name="container" default="" />
         <param name="uid" default="661" />
         <param name="fullgenre" default="false" />
+        <param name="percentrating" default="false" />
+        <param name="green" default="ff27ae60" />
         <definition>
             <control type="grouplist">
                 <height>40</height>
@@ -1312,6 +1178,13 @@
                 <right>0</right>
                 <!-- First Items -->
                 <!-- Set a fallback so divider is not first item if blank -->
+                <include content="Object_Info_Line_Label" condition="!Skin.HasSetting(Infoline.DisableMatch)">
+                    <param name="label" value="$VAR[Def_Percentage_Rating]% $LOCALIZE[31589]   " />
+                    <param name="font" value="font_title_mini" />
+                    <param name="textcolor" value="$PARAM[green]" />
+                    <param name="divider" value="false" />
+                    <param name="visible" value="!String.IsEmpty(ListItem.Rating) + $PARAM[percentrating]" />
+                </include>
                 <include content="Object_Info_Line_Label">
                     <param name="label" value="$INFO[$PARAM[container]ListItem.Year]" />
                     <param name="textcolor" value="$PARAM[textcolor]" />
@@ -1483,12 +1356,12 @@
         </definition>
     </include>
 
-    <include name="Flix_Object_Info_Title">
+    <include name="Object_Info_Title">
         <param name="label" default="$INFO[ListItem.Label]" />
         <param name="font" default="font_title_large" />
         <param name="titleheight" default="80" />
         <param name="textcolor" default="main_fg_100" />
-        <param name="shadowcolor" default="ff000000" />
+        <param name="shadowcolor" default="" />
         <param name="top" default="" />
         <param name="visible" default="true" />
         <definition>
@@ -1505,56 +1378,25 @@
         </definition>
     </include>
 
-    <include name="Object_Info_Title">
-        <param name="label" default="$INFO[ListItem.Label]" />
-        <param name="font" default="font_title_large" />
-        <param name="titleheight" default="80" />
-        <param name="textcolor" default="main_fg_100" />
-        <definition>
-            <control type="label">
-                <label>$PARAM[label]</label>
-                <height>$PARAM[titleheight]</height>
-                <aligny>top</aligny>
-                <textcolor>$PARAM[textcolor]</textcolor>
-                <font>$PARAM[font]</font>
-            </control>
-        </definition>
-    </include>
-
-    <include name="Flix_Object_Info_Plot">
-        <param name="height" default="120" />
-        <param name="maxwidth" default="820" />
-        <param name="width" default="auto" />
-        <param name="top" default="30" />
-        <param name="shadowcolor" default="ff000000" />
+    <include name="Object_Info_Plot">
+        <param name="maxheight" default="200" />
+        <param name="height" default="auto" />
         <param name="label" default="$VAR[Label_Plot]" />
+        <param name="top" default="10" />
+        <param name="textcolor" default="main_fg_70" />
+        <param name="shadowcolor" default="" />
+        <param name="width" default="" />
+        <param name="maxwidth" default="" />
         <definition>
             <control type="textbox">
                 <nested />
                 <top>$PARAM[top]</top>
                 <label>$PARAM[label]</label>
-                <height>$PARAM[height]</height>
+                <height max="$PARAM[maxheight]">$PARAM[height]</height>
                 <width max="$PARAM[maxwidth]">$PARAM[width]</width>
                 <aligny>top</aligny>
-                <textcolor>main_fg_100</textcolor>
+                <textcolor>$PARAM[textcolor]</textcolor>
                 <shadowcolor>$PARAM[shadowcolor]</shadowcolor>
-                <font>font_plotbox</font>
-            </control>
-        </definition>
-    </include>
-
-    <include name="Object_Info_Plot">
-        <param name="maxheight" default="200" />
-        <param name="height" default="auto" />
-        <param name="label" default="$VAR[Label_Plot]" />
-        <definition>
-            <control type="textbox">
-                <nested />
-                <top>10</top>
-                <label>$PARAM[label]</label>
-                <height max="$PARAM[maxheight]">$PARAM[height]</height>
-                <aligny>top</aligny>
-                <textcolor>main_fg_70</textcolor>
                 <font>font_plotbox</font>
             </control>
         </definition>

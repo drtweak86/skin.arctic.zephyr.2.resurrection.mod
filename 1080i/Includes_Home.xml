@@ -1451,8 +1451,6 @@
     <include name="Home_CornerIcon">
         <include content="Home_CornerIcon_Template" condition="String.IsEmpty(Skin.String(CornerIcon))">
             <param name="icon" value="special://skin/extras/icons/search.png" />
-            <onclick>Skin.Reset(SearchTerm)</onclick>
-            <onclick>Skin.SetString(SearchTerm)</onclick>
             <onclick>ActivateWindow(1138)</onclick>
         </include>
         <include content="Home_CornerIcon_Template" condition="String.IsEqual(Skin.String(CornerIcon),Settings)">
@@ -1841,7 +1839,7 @@
                 <top>15</top>
                 <control type="group">
                     <height>200</height>
-                    <include content="Flix_Object_Info_Title">
+                    <include content="Object_Info_Title">
                         <param name="label" value="$INFO[Container($PARAM[id]).ListItem.Title]" />
                         <param name="font" value="font_title_large" />
                         <param name="shadowcolor" value="ff000000" />
@@ -1856,15 +1854,20 @@
                         <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))</visible>
                     </control>
                 </control>
-                <include content="Flix_Object_Info_Line">
+                <include content="Object_Info_Line">
                     <param name="container" value="Container($PARAM[id])." />
                     <param name="uid" value="$PARAM[uid]" />
                     <param name="maxheight" value="$PARAM[plotheight]" />
+                    <param name="percentrating" value="true" />
                 </include>
-                <include content="Flix_Object_Info_Plot">
+                <include content="Object_Info_Plot">
                     <param name="label" value="$INFO[Container($PARAM[id]).ListItem.Plot]" />
                     <param name="maxheight" value="$PARAM[plotheight]" />
                     <param name="shadowcolor" value="ff000000" />
+                    <param name="top" value="30" />
+                    <param name="textcolor" value="main_fg_100" />
+                    <param name="width" value="auto" />
+                    <param name="maxwidth" value="820" />
                 </include>
                 <control type="group">
                     <top>48</top>

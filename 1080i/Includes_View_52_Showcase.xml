@@ -227,7 +227,7 @@
                 <itemgap>0</itemgap>
                 <control type="group">
                     <height>200</height>
-                    <include content="Flix_Object_Info_Title">
+                    <include content="Object_Info_Title">
                         <param name="font" value="font_title_large" />
                         <param name="shadowcolor" value="ff000000" />
                         <param name="titleheight" value="$PARAM[titleheight]" />
@@ -241,10 +241,17 @@
                         <visible>$EXP[Exp_HasClearlogo]</visible>
                     </control>
                 </control>
-                <include>Flix_Object_Info_Line</include>
-                <include content="Flix_Object_Info_Plot">
+                <include content="Object_Info_Line">
+                    <param name="percentrating" value="true" />
+                </include>
+                <include content="Object_Info_Plot">
                     <param name="maxheight" value="$PARAM[plotheight]" />
                     <param name="shadowcolor" value="ff000000" />
+                    <param name="height" value="120" />
+                    <param name="top" value="30" />
+                    <param name="textcolor" value="main_fg_100" />
+                    <param name="width" value="auto" />
+                    <param name="maxwidth" value="820" />
                 </include>
                 <control type="group">
                     <top>48</top>
@@ -310,7 +317,7 @@
                 <control type="group">
                     <visible>!$EXP[Exp_HasClearlogo] | !Skin.HasSetting(ShowClearlogo)</visible>
                     <height>90</height>
-                    <include content="Flix_Object_Info_Title">
+                    <include content="Object_Info_Title">
                         <param name="font" value="font_title_medium" />
                         <param name="shadowcolor" value="ff000000" />
                         <param name="titleheight" value="$PARAM[titleheight]" />
@@ -326,23 +333,29 @@
                         <texture background="true">$VAR[Image_Clearlogo]</texture>
                     </control>
                 </control>
-                <include content="Flix_Object_Info_Line">
+                <include content="Object_Info_Line">
                     <param name="percentrating" value="false" />
                 </include>
                 <control type="group">
                     <visible>$EXP[Exp_HasClearlogo] + Skin.HasSetting(ShowClearlogo)</visible>
-                    <include content="Flix_Object_Info_Plot">
+                    <include content="Object_Info_Plot">
                         <param name="height" value="$PARAM[plotheight]" />
                         <param name="top" value="10" />
                         <param name="shadowcolor" value="ff000000" />
+                        <param name="textcolor" value="main_fg_100" />
+                        <param name="width" value="auto" />
+                        <param name="maxwidth" value="820" />
                     </include>
                 </control>
                 <control type="group">
                     <visible>!$EXP[Exp_HasClearlogo] | !Skin.HasSetting(ShowClearlogo)</visible>
-                    <include content="Flix_Object_Info_Plot">
+                    <include content="Object_Info_Plot">
                         <param name="height" value="320" />
                         <param name="top" value="10" />
                         <param name="shadowcolor" value="ff000000" />
+                        <param name="textcolor" value="main_fg_100" />
+                        <param name="width" value="auto" />
+                        <param name="maxwidth" value="820" />
                     </include>
                 </control>
             </control>
@@ -367,10 +380,11 @@
                 <usecontrolcoords>true</usecontrolcoords>
                 <itemgap>0</itemgap>
                 <visible>String.IsEmpty(ListItem.ChannelName)</visible>
-                <include content="Flix_Object_Info_Title">
+                <include content="Object_Info_Title">
                     <param name="font" value="$PARAM[font]" />
                     <param name="titleheight" value="$PARAM[titleheight]" />
                     <param name="visible" value="!$EXP[Exp_HasClearlogo] | !Skin.HasSetting(ShowClearlogo)" />
+                    <param name="shadowcolor" value="ff000000" />
                 </include>
                 <control type="group">
                     <visible>$EXP[Exp_HasClearlogo] + Skin.HasSetting(ShowClearlogo)</visible>

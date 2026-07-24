@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+
+    <include name="Search_Result_Card">
+        <param name="tabname" />
+        <definition>
+            <itemlayout width="280" height="430">
+                <control type="image">
+                    <include>Defs_Shadow_24</include>
+                    <width>280</width>
+                    <height>380</height>
+                    <aspectratio>scale</aspectratio>
+                    <texture diffuse="diffuse/poster-wall.png" fallback="DefaultVideo.png">$INFO[ListItem.Art(poster)]</texture>
+                </control>
+                <control type="label">
+                    <top>390</top>
+                    <width>280</width>
+                    <height>35</height>
+                    <font>font_mini_bold</font>
+                    <textcolor>dialog_fg_70</textcolor>
+                    <align>center</align>
+                    <label>$INFO[ListItem.Label]</label>
+                </control>
+            </itemlayout>
+            <focusedlayout width="280" height="430">
+                <control type="image">
+                    <include>Defs_Shadow_24</include>
+                    <width>280</width>
+                    <height>380</height>
+                    <aspectratio>scale</aspectratio>
+                    <texture diffuse="diffuse/poster-wall.png" colordiffuse="$VAR[ColorHighlight]" fallback="DefaultVideo.png">$INFO[ListItem.Art(poster)]</texture>
+                </control>
+                <control type="label">
+                    <top>390</top>
+                    <width>280</width>
+                    <height>35</height>
+                    <font>font_mini_bold</font>
+                    <textcolor>$VAR[ColorSelected]</textcolor>
+                    <align>center</align>
+                    <scroll>true</scroll>
+                    <label>$INFO[ListItem.Label]</label>
+                </control>
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <include name="Search_Tab_Button">
+        <param name="id" />
+        <param name="value" />
+        <param name="label" />
+        <param name="onleft" default="" />
+        <param name="onright" default="" />
+        <param name="ondown" />
+        <definition>
+            <control type="group">
+                <width>200</width>
+                <height>64</height>
+                <control type="button" id="$PARAM[id]">
+                    <width>200</width>
+                    <height>60</height>
+                    <label>$PARAM[label]</label>
+                    <font>font_small_bold</font>
+                    <textcolor>dialog_fg_70</textcolor>
+                    <selectedcolor>$VAR[ColorSelected]</selectedcolor>
+                    <onclick>Skin.SetString(SearchActiveTab,$PARAM[value])</onclick>
+                    <onup>9199</onup>
+                    <onleft condition="!String.IsEmpty($PARAM[onleft])">$PARAM[onleft]</onleft>
+                    <onright condition="!String.IsEmpty($PARAM[onright])">$PARAM[onright]</onright>
+                    <ondown>$PARAM[ondown]</ondown>
+                    <include>Animation_FadeInOut</include>
+                </control>
+                <control type="image">
+                    <top>54</top>
+                    <width>200</width>
+                    <height>4</height>
+                    <colordiffuse>$VAR[ColorHighlight]</colordiffuse>
+                    <texture>common/white.png</texture>
+                    <visible>String.IsEqual(Skin.String(SearchActiveTab),$PARAM[value])</visible>
+                </control>
+            </control>
+        </definition>
+    </include>
+
+    <include name="Search_Result_Panel">
+        <param name="id" />
+        <param name="tabvalue" />
+        <param name="onup" />
+        <param name="visible_extra" default="true" />
+        <param name="content" />
+        <definition>
+            <control type="group">
+                <visible>String.IsEqual(Skin.String(SearchActiveTab),$PARAM[tabvalue]) + $PARAM[visible_extra]</visible>
+                <include>Animation_FadeInOut</include>
+                <control type="panel" id="$PARAM[id]">
+                    <description>$PARAM[tabvalue] results</description>
+                    <top>240</top>
+                    <width>1800</width>
+                    <height>700</height>
+                    <orientation>horizontal</orientation>
+                    <onup>$PARAM[onup]</onup>
+                    <include content="Search_Result_Card" />
+                    <content>$PARAM[content]</content>
+                </control>
+                <control type="label">
+                    <top>240</top>
+                    <width>1800</width>
+                    <height>60</height>
+                    <align>center</align>
+                    <font>font_small</font>
+                    <textcolor>dialog_fg_30</textcolor>
+                    <label>$LOCALIZE[284]</label>
+                    <visible>Integer.IsEqual(Container($PARAM[id]).NumItems,0) + !Container($PARAM[id]).IsUpdating</visible>
+                </control>
+            </control>
+        </definition>
+    </include>
+
+    <include name="Search_Panel_Live">
+        <control type="group">
+            <left>60</left>
+            <top>60</top>
+
+            <control type="group">
+                <width>1800</width>
+                <height>75</height>
+                <top>50</top>
+                <include>Defs_Shadow_24</include>
+                <control type="image">
+                    <width>1800</width>
+                    <height>75</height>
+                    <texture border="16" colordiffuse="dialog_bg_100">common/dialog.png</texture>
+                </control>
+                <control type="image">
+                    <left>20</left>
+                    <top>20</top>
+                    <width>35</width>
+                    <height>35</height>
+                    <colordiffuse>dialog_fg_70</colordiffuse>
+                    <texture>special://skin/extras/icons/search.png</texture>
+                </control>
+            </control>
+
+            <control type="label">
+                <description>Search hint</description>
+                <left>70</left>
+                <top>50</top>
+                <width>1530</width>
+                <height>75</height>
+                <aligny>center</aligny>
+                <font>font_small</font>
+                <textcolor>dialog_fg_30</textcolor>
+                <label>$LOCALIZE[137]</label>
+                <visible>String.IsEmpty(Control.GetLabel(9199).index(1))</visible>
+            </control>
+
+            <control type="edit" id="9199">
+                <description>Search query</description>
+                <left>70</left>
+                <top>50</top>
+                <width>1530</width>
+                <height>75</height>
+                <aligny>center</aligny>
+                <align>left</align>
+                <font>font_small_bold</font>
+                <textcolor>dialog_fg_100</textcolor>
+                <focusedcolor>$VAR[ColorSelected]</focusedcolor>
+                <texturefocus/>
+                <texturenofocus/>
+                <onright condition="String.IsEqual(Skin.String(SearchActiveTab),Anime)">9205</onright>
+                <onright>9201</onright>
+                <ondown>9201</ondown>
+            </control>
+
+            <control type="button" id="9205">
+                <description>Search Anime</description>
+                <top>50</top>
+                <left>1620</left>
+                <width>180</width>
+                <height>75</height>
+                <label>$LOCALIZE[137]</label>
+                <font>font_small_bold</font>
+                <textcolor>dialog_fg_70</textcolor>
+                <selectedcolor>$VAR[ColorSelected]</selectedcolor>
+                <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">diffuse/box.png</texturefocus>
+                <texturenofocus colordiffuse="dialog_fg_12" border="5">diffuse/box.png</texturenofocus>
+                <visible>String.IsEqual(Skin.String(SearchActiveTab),Anime)</visible>
+                <onclick>Skin.SetString(AnimeSearchQuery,$INFO[Control.GetLabel(9199).index(1)])</onclick>
+                <onleft>9199</onleft>
+                <onup>9199</onup>
+                <ondown>9213</ondown>
+            </control>
+
+            <control type="grouplist" id="9200">
+                <top>150</top>
+                <width>1800</width>
+                <height>60</height>
+                <orientation>horizontal</orientation>
+                <itemgap>10</itemgap>
+
+                <include content="Search_Tab_Button">
+                    <param name="id" value="9201" />
+                    <param name="value" value="Movies" />
+                    <param name="label" value="$LOCALIZE[20338]" />
+                    <param name="onleft" value="9199" />
+                    <param name="onright" value="9202" />
+                    <param name="ondown" value="9210" />
+                </include>
+                <include content="Search_Tab_Button">
+                    <param name="id" value="9202" />
+                    <param name="value" value="TV" />
+                    <param name="label" value="$LOCALIZE[20343]" />
+                    <param name="onleft" value="9201" />
+                    <param name="onright" value="9203" />
+                    <param name="ondown" value="9211" />
+                </include>
+                <include content="Search_Tab_Button">
+                    <param name="id" value="9203" />
+                    <param name="value" value="People" />
+                    <param name="label" value="$LOCALIZE[133]" />
+                    <param name="onleft" value="9202" />
+                    <param name="onright" value="9204" />
+                    <param name="ondown" value="9212" />
+                </include>
+                <include content="Search_Tab_Button">
+                    <param name="id" value="9204" />
+                    <param name="value" value="Anime" />
+                    <param name="label" value="Anime" />
+                    <param name="onleft" value="9203" />
+                    <param name="ondown" value="9213" />
+                </include>
+            </control>
+
+            <include content="Search_Result_Panel">
+                <param name="id" value="9210" />
+                <param name="tabvalue" value="Movies" />
+                <param name="onup" value="9201" />
+                <param name="visible_extra" value="!String.IsEmpty(Control.GetLabel(9199).index(1))" />
+                <param name="content" value="plugin://plugin.video.themoviedb.helper?info=search&amp;tmdb_type=movie&amp;query=$INFO[Control.GetLabel(9199).index(1)]" />
+            </include>
+
+            <include content="Search_Result_Panel">
+                <param name="id" value="9211" />
+                <param name="tabvalue" value="TV" />
+                <param name="onup" value="9202" />
+                <param name="visible_extra" value="!String.IsEmpty(Control.GetLabel(9199).index(1))" />
+                <param name="content" value="plugin://plugin.video.themoviedb.helper?info=search&amp;tmdb_type=tv&amp;query=$INFO[Control.GetLabel(9199).index(1)]" />
+            </include>
+
+            <include content="Search_Result_Panel">
+                <param name="id" value="9212" />
+                <param name="tabvalue" value="People" />
+                <param name="onup" value="9203" />
+                <param name="visible_extra" value="!String.IsEmpty(Control.GetLabel(9199).index(1))" />
+                <param name="content" value="plugin://plugin.video.themoviedb.helper?info=search&amp;tmdb_type=person&amp;query=$INFO[Control.GetLabel(9199).index(1)]" />
+            </include>
+
+            <include content="Search_Result_Panel">
+                <param name="id" value="9213" />
+                <param name="tabvalue" value="Anime" />
+                <param name="onup" value="9204" />
+                <param name="visible_extra" value="!String.IsEmpty(Skin.String(AnimeSearchQuery))" />
+                <param name="content" value="plugin://plugin.video.otaku/search_anime/$INFO[Skin.String(AnimeSearchQuery)]" />
+            </include>
+
+        </control>
+    </include>
+
+</includes>

@@ -1967,8 +1967,6 @@
             <item>
                 <label>$LOCALIZE[137]</label>
                 <icon>special://skin/extras/icons/search.png</icon>
-                <onclick>Skin.Reset(SearchTerm)</onclick>
-                <onclick>Skin.SetString(SearchTerm)</onclick>
                 <onclick>ActivateWindow(1138)</onclick>
                 <visible>!Window.IsVisible(MyPVRChannels.xml) + !Window.IsVisible(MyPVRGuide.xml) + !Window.IsVisible(MyPVRTimers.xml) + !Window.IsVisible(MyPVRRecordings.xml) + !Window.IsVisible(MyPVRSearch.xml)</visible>
             </item>
@@ -2859,106 +2857,58 @@
         </control>
     </include>
 
-    <include name="Items_Settings_RatingsMovies">
-        <control type="button" id="9001">
-            <include>Dialog_Standard_Button</include>
-            <label>$LOCALIZE[563] 01</label>
-            <label2>$VAR[Label_CustomRating_Movies_01]</label2>
-            <onclick>SetProperty(ConfigureRatingItem,Item01,Home)</onclick>
-            <onclick>SetProperty(ConfigureRatingContent,Movies,Home)</onclick>
-            <onclick>ActivateWindow(1118)</onclick>
-        </control>
-        <control type="button" id="9002">
-            <include>Dialog_Standard_Button</include>
-            <label>$LOCALIZE[563] 02</label>
-            <label2>$VAR[Label_CustomRating_Movies_02]</label2>
-            <onclick>SetProperty(ConfigureRatingItem,Item02,Home)</onclick>
-            <onclick>SetProperty(ConfigureRatingContent,Movies,Home)</onclick>
-            <onclick>ActivateWindow(1118)</onclick>
-        </control>
-        <control type="button" id="9003">
-            <include>Dialog_Standard_Button</include>
-            <label>$LOCALIZE[563] 03</label>
-            <label2>$VAR[Label_CustomRating_Movies_03]</label2>
-            <onclick>SetProperty(ConfigureRatingItem,Item03,Home)</onclick>
-            <onclick>SetProperty(ConfigureRatingContent,Movies,Home)</onclick>
-            <onclick>ActivateWindow(1118)</onclick>
-        </control>
-        <control type="button" id="9004">
-            <include>Dialog_Standard_Button</include>
-            <label>$LOCALIZE[563] 04</label>
-            <label2>$VAR[Label_CustomRating_Movies_04]</label2>
-            <onclick>SetProperty(ConfigureRatingItem,Item04,Home)</onclick>
-            <onclick>SetProperty(ConfigureRatingContent,Movies,Home)</onclick>
-            <onclick>ActivateWindow(1118)</onclick>
-        </control>
-        <control type="button" id="9005">
-            <include>Dialog_Standard_Button</include>
-            <label>$LOCALIZE[563] 05</label>
-            <label2>$VAR[Label_CustomRating_Movies_05]</label2>
-            <onclick>SetProperty(ConfigureRatingItem,Item05,Home)</onclick>
-            <onclick>SetProperty(ConfigureRatingContent,Movies,Home)</onclick>
-            <onclick>ActivateWindow(1118)</onclick>
-        </control>
-        <control type="button" id="9006">
-            <include>Dialog_Standard_Button</include>
-            <label>$LOCALIZE[563] 06</label>
-            <label2>$VAR[Label_CustomRating_Movies_06]</label2>
-            <onclick>SetProperty(ConfigureRatingItem,Item06,Home)</onclick>
-            <onclick>SetProperty(ConfigureRatingContent,Movies,Home)</onclick>
-            <onclick>ActivateWindow(1118)</onclick>
-        </control>
-    </include>
-
-    <include name="Items_Settings_RatingsTVShows">
-        <control type="button" id="9001">
-            <include>Dialog_Standard_Button</include>
-            <label>$LOCALIZE[563] 01</label>
-            <label2>$VAR[Label_CustomRating_TVShows_01]</label2>
-            <onclick>SetProperty(ConfigureRatingItem,Item01,Home)</onclick>
-            <onclick>SetProperty(ConfigureRatingContent,TVShows,Home)</onclick>
-            <onclick>ActivateWindow(1118)</onclick>
-        </control>
-        <control type="button" id="9002">
-            <include>Dialog_Standard_Button</include>
-            <label>$LOCALIZE[563] 02</label>
-            <label2>$VAR[Label_CustomRating_TVShows_02]</label2>
-            <onclick>SetProperty(ConfigureRatingItem,Item02,Home)</onclick>
-            <onclick>SetProperty(ConfigureRatingContent,TVShows,Home)</onclick>
-            <onclick>ActivateWindow(1118)</onclick>
-        </control>
-        <control type="button" id="9003">
-            <include>Dialog_Standard_Button</include>
-            <label>$LOCALIZE[563] 03</label>
-            <label2>$VAR[Label_CustomRating_TVShows_03]</label2>
-            <onclick>SetProperty(ConfigureRatingItem,Item03,Home)</onclick>
-            <onclick>SetProperty(ConfigureRatingContent,TVShows,Home)</onclick>
-            <onclick>ActivateWindow(1118)</onclick>
-        </control>
-        <control type="button" id="9004">
-            <include>Dialog_Standard_Button</include>
-            <label>$LOCALIZE[563] 04</label>
-            <label2>$VAR[Label_CustomRating_TVShows_04]</label2>
-            <onclick>SetProperty(ConfigureRatingItem,Item04,Home)</onclick>
-            <onclick>SetProperty(ConfigureRatingContent,TVShows,Home)</onclick>
-            <onclick>ActivateWindow(1118)</onclick>
-        </control>
-        <control type="button" id="9005">
-            <include>Dialog_Standard_Button</include>
-            <label>$LOCALIZE[563] 05</label>
-            <label2>$VAR[Label_CustomRating_TVShows_05]</label2>
-            <onclick>SetProperty(ConfigureRatingItem,Item05,Home)</onclick>
-            <onclick>SetProperty(ConfigureRatingContent,TVShows,Home)</onclick>
-            <onclick>ActivateWindow(1118)</onclick>
-        </control>
-        <control type="button" id="9006">
-            <include>Dialog_Standard_Button</include>
-            <label>$LOCALIZE[563] 06</label>
-            <label2>$VAR[Label_CustomRating_TVShows_06]</label2>
-            <onclick>SetProperty(ConfigureRatingItem,Item06,Home)</onclick>
-            <onclick>SetProperty(ConfigureRatingContent,TVShows,Home)</onclick>
-            <onclick>ActivateWindow(1118)</onclick>
-        </control>
+    <include name="Items_Settings_Ratings_Template">
+        <param name="contenttype" default="Movies" />
+        <definition>
+            <control type="button" id="9001">
+                <include>Dialog_Standard_Button</include>
+                <label>$LOCALIZE[563] 01</label>
+                <label2>$VAR[Label_CustomRating_$PARAM[contenttype]_01]</label2>
+                <onclick>SetProperty(ConfigureRatingItem,Item01,Home)</onclick>
+                <onclick>SetProperty(ConfigureRatingContent,$PARAM[contenttype],Home)</onclick>
+                <onclick>ActivateWindow(1118)</onclick>
+            </control>
+            <control type="button" id="9002">
+                <include>Dialog_Standard_Button</include>
+                <label>$LOCALIZE[563] 02</label>
+                <label2>$VAR[Label_CustomRating_$PARAM[contenttype]_02]</label2>
+                <onclick>SetProperty(ConfigureRatingItem,Item02,Home)</onclick>
+                <onclick>SetProperty(ConfigureRatingContent,$PARAM[contenttype],Home)</onclick>
+                <onclick>ActivateWindow(1118)</onclick>
+            </control>
+            <control type="button" id="9003">
+                <include>Dialog_Standard_Button</include>
+                <label>$LOCALIZE[563] 03</label>
+                <label2>$VAR[Label_CustomRating_$PARAM[contenttype]_03]</label2>
+                <onclick>SetProperty(ConfigureRatingItem,Item03,Home)</onclick>
+                <onclick>SetProperty(ConfigureRatingContent,$PARAM[contenttype],Home)</onclick>
+                <onclick>ActivateWindow(1118)</onclick>
+            </control>
+            <control type="button" id="9004">
+                <include>Dialog_Standard_Button</include>
+                <label>$LOCALIZE[563] 04</label>
+                <label2>$VAR[Label_CustomRating_$PARAM[contenttype]_04]</label2>
+                <onclick>SetProperty(ConfigureRatingItem,Item04,Home)</onclick>
+                <onclick>SetProperty(ConfigureRatingContent,$PARAM[contenttype],Home)</onclick>
+                <onclick>ActivateWindow(1118)</onclick>
+            </control>
+            <control type="button" id="9005">
+                <include>Dialog_Standard_Button</include>
+                <label>$LOCALIZE[563] 05</label>
+                <label2>$VAR[Label_CustomRating_$PARAM[contenttype]_05]</label2>
+                <onclick>SetProperty(ConfigureRatingItem,Item05,Home)</onclick>
+                <onclick>SetProperty(ConfigureRatingContent,$PARAM[contenttype],Home)</onclick>
+                <onclick>ActivateWindow(1118)</onclick>
+            </control>
+            <control type="button" id="9006">
+                <include>Dialog_Standard_Button</include>
+                <label>$LOCALIZE[563] 06</label>
+                <label2>$VAR[Label_CustomRating_$PARAM[contenttype]_06]</label2>
+                <onclick>SetProperty(ConfigureRatingItem,Item06,Home)</onclick>
+                <onclick>SetProperty(ConfigureRatingContent,$PARAM[contenttype],Home)</onclick>
+                <onclick>ActivateWindow(1118)</onclick>
+            </control>
+        </definition>
     </include>
 
     <include name="Items_Dialog_RatingType_Template">
